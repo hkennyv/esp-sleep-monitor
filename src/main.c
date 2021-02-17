@@ -29,6 +29,7 @@ void app_main(void)
     {
         printf("Restarting in %d seconds...\n", i);
         bme280_read_id();
+        bme280_read_temp();
         ccs811_read_id();
         vTaskDelay(1000 / portTICK_PERIOD_MS);
         gpio_set_level(LED, i % 2);
