@@ -13,7 +13,10 @@
 #include "esp_spi_flash.h"
 
 #include "driver/gpio.h"
+#include "bme280.h"
+#include "ccs811.h"
 #include "gpio.h"
+#include "i2c.h"
 
 void init();
 
@@ -25,6 +28,8 @@ void app_main(void)
     for (int i = 10; i >= 0; i--)
     {
         printf("Restarting in %d seconds...\n", i);
+        bme280_read_id();
+        ccs811_read_id();
         vTaskDelay(1000 / portTICK_PERIOD_MS);
         gpio_set_level(LED, i % 2);
     }
@@ -36,4 +41,5 @@ void app_main(void)
 void init()
 {
     gpio_config_init();
+    i2c_init();
 }
